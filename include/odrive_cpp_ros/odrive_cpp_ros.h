@@ -1,7 +1,6 @@
 #ifndef ODRIVE_SDK_INCLUDE_ODRIVE_SDK_ODRIVESDK_H_
 #define ODRIVE_SDK_INCLUDE_ODRIVE_SDK_ODRIVESDK_H_
 
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -55,16 +54,24 @@ namespace odrive
 
         int setMotorSpeed(int motor_index, float motor_speed);
         int setMotorSpeeds(float* motor_speeds); // assumed to match num_motors
+        
+        int setError(int motor_index, uint16_t error_val);
+        int setErrors(); // assumed to match num_motors
+        
+        int setState(int motor_index, uint8_t state_val);
+        int setStates(); // assumed to match num_motors
 
         int getMotorSpeed(int motor_index, float &motor_speed);
         int getBusVoltage(int motor_index, float &voltage);
 
-        int getMotorPosition(int motor_index, int &motor_position);
+        int getMotorPosition(int motor_index, float &motor_position);
 
         int readCurrentMotorPosition(int motor_index, int &motor_position);
         int readCurrentMotorPositions(int* axes_positions); // assumed to match num_motors
         
         int checkErrors(uint8_t* error_codes_array); // assumed to match num_motors
+        
+        int sendWatchdog();
 
     private:
         // read settings
@@ -94,8 +101,11 @@ namespace odrive
         int odriveEndpointGetUInt8(libusb_device_handle* handle, int endpoint_id, uint8_t& value);
         int odriveEndpointGetUInt64(libusb_device_handle* handle, int endpoint_id, uint64_t& value);
         int odriveEndpointGetFloat(libusb_device_handle* handle, int endpoint_id, float& value);
+        int odriveEndpointVoid(libusb_device_handle* handle, int endpoint_id);
         
         int odriveEndpointSetInt(libusb_device_handle* handle, int endpoint_id, const int& value);
+        int odriveEndpointSetInt8(libusb_device_handle* handle, int endpoint_id, const uint8_t& value);
+        int odriveEndpointSetInt16(libusb_device_handle* handle, int endpoint_id, const uint16_t& value);
         int odriveEndpointSetFloat(libusb_device_handle* handle, int endpoint_id, const float& value);
         
         void serializeCommBufferInt(commBuffer& buf, const int& value);
