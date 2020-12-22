@@ -73,6 +73,10 @@ namespace odrive
         
         int sendWatchdog();
 
+	int setVGain(int motor_index, float gain);
+	int setVIGain(int motor_index, float gain);
+	int setCCBandwidth(int motor_index, float bandwidth);
+
     private:
         // read settings
         uint8_t num_odrives_;
