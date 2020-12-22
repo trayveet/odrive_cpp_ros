@@ -75,7 +75,7 @@ class Navvy : public hardware_interface::RobotHW {
     void updateJointsFromHardware() {
         //std::cout << "Updating joints" << std::endl;
         float speed;
-	    float motor_pos;
+	float motor_pos;
         float pos_cpr;
         float pos_delta;
         double angle_delta;
@@ -180,9 +180,8 @@ class Navvy : public hardware_interface::RobotHW {
 };
 
 
-//This file combines navvy_hardware.h, navvy_hardware.cpp and navvy_base.cpp into a single file
 int main(int argc, char* argv[]) {
-    ros::init(argc, argv, "navvy_odrive_interface");
+    ros::init(argc, argv, "robot_odrive_interface");
     Navvy robot;
     controller_manager::ControllerManager cm(&robot);
 
