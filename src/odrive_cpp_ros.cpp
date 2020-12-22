@@ -133,7 +133,7 @@ int ODriveDriver::getInt(int motor_index, int &param, int endpoint_id) {
 
 int ODriveDriver::getBusVoltage(int motor_index, float &voltage) {
     getFloat(motor_index, voltage, VBUS_VOLTAGE);
-    std::cout << "Voltage: " << motor_index << " : " << voltage << std::endl;
+    // std::cout << "Voltage: " << motor_index << " : " << voltage << std::endl;
 }
 
 int ODriveDriver::getPosCPR(int motor_index, float &pos) {
@@ -322,6 +322,64 @@ int ODriveDriver::sendWatchdog() {
     }
     return ODRIVE_SDK_COMM_SUCCESS;
 }
+
+// PID code
+
+
+int ODriveDriver::setVGain(int motor_index, float gain) {
+
+	if (! motor_to_odrive_handle_index_) return ODRIVE_SDK_NOT_INITIALIZED;
+	
+	int axis_offset = (motor_index_map_[motor_index] == 1) ? per_axis_offset : 0;
+	int cmd = AXIS__CONTROLLER__CONFIG__VEL_GAIN + axis_offset;
+	uint8_t handle_index = motor_to_odrive_handle_index_[motor_index];
+
+	int result = odriveEndpointSetFloat(odrive_handles_[handle_index], cmd, gain);
+
+	if (result != LIBUSB_SUCCESS) {
+	std::cerr << "Couldn't send `" << std::to_string(cmd) << "` to '" << odrive_serial_numbers_[handle_index] << "': `" << result << "` (see prior error message)" << std::endl;
+	return ODRIVE_SDK_UNEXPECTED_RESPONSE;
+	}
+	return ODRIVE_SDK_COMM_SUCCESS;
+}
+
+int ODriveDriver::setVIGain(int motor_index, float gain) {
+
+	if (! motor_to_odrive_handle_index_) return ODRIVE_SDK_NOT_INITIALIZED;
+	
+	int axis_offset = (motor_index_map_[motor_index] == 1) ? per_axis_offset : 0;
+	int cmd = AXIS__CONTROLLER__CONFIG__VEL_INTEGRATOR_GAIN + axis_offset;
+	uint8_t handle_index = motor_to_odrive_handle_index_[motor_index];
+
+	int result = odriveEndpointSetFloat(odrive_handles_[handle_index], cmd, gain);
+
+	if (result != LIBUSB_SUCCESS) {
+	std::cerr << "Couldn't send `" << std::to_string(cmd) << "` to '" << odrive_serial_numbers_[handle_index] << "': `" << result << "` (see prior error message)" << std::endl;
+	return ODRIVE_SDK_UNEXPECTED_RESPONSE;
+	}
+	return ODRIVE_SDK_COMM_SUCCESS;
+}
+
+int ODriveDriver::setCCBandwidth(int motor_index, float bandwidth) {
+
+	if (! motor_to_odrive_handle_index_) return ODRIVE_SDK_NOT_INITIALIZED;
+	
+	int axis_offset = (motor_index_map_[motor_index] == 1) ? per_axis_offset : 0;
+	int cmd = AXIS__MOTOR__CONFIG__CURRENT_CONTROL_BANDWIDTH + axis_offset;
+	uint8_t handle_index = motor_to_odrive_handle_index_[motor_index];
+
+	int result = odriveEndpointSetFloat(odrive_handles_[handle_index], cmd, bandwidth);
+
+	if (result != LIBUSB_SUCCESS) {
+	std::cerr << "Couldn't send `" << std::to_string(cmd) << "` to '" << odrive_serial_numbers_[handle_index] << "': `" << result << "` (see prior error message)" << std::endl;
+	return ODRIVE_SDK_UNEXPECTED_RESPONSE;
+	}
+	return ODRIVE_SDK_COMM_SUCCESS;
+}
+
+// PID code
+
+
 
 int ODriveDriver::initUSBHandlesBySNs() {
     libusb_device ** usb_device_list;
