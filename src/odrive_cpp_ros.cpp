@@ -137,7 +137,7 @@ int ODriveDriver::getBusVoltage(int motor_index, float &voltage) {
 }
 
 int ODriveDriver::getPosCPR(int motor_index, float &pos) {
-    getFloat(motor_index, pos, AXIS__ENCODER__POS_CPR);
+    getFloat(motor_index, pos, AXIS__ENCODER__POS_CPR_COUNTS);
 }
 
 int ODriveDriver::getMotorSpeed(int motor_index, float &motor_speed) {
@@ -157,7 +157,7 @@ int ODriveDriver::setMotorSpeed(int motor_index, float motor_speed) {
     }
     
     int axis_offset = (motor_index_map_[motor_index] == 1) ? per_axis_offset : 0;
-    int cmd = AXIS__CONTROLLER__VEL_SETPOINT + axis_offset;
+    int cmd = AXIS__CONTROLLER__INPUT_VEL + axis_offset;
     
     uint8_t handle_index = motor_to_odrive_handle_index_[motor_index];
 
@@ -191,9 +191,9 @@ int ODriveDriver::setState(int motor_index, uint8_t state_val) {
 
 int ODriveDriver::setStates() {
     for (uint8_t i = 0; i < num_motors_; ++i) {
-        int result = setState(i, 8);
+        int result = setState(i, 8); //run closed loop control
         if (result != ODRIVE_SDK_COMM_SUCCESS) {
-            std::cout << "Setting error for motor #" << i << " failed. Result: " << result << std::endl;
+            std::cout << "Setting state for motor #" << i << " failed. Result: " << result << std::endl;
             return result;
         }
     }

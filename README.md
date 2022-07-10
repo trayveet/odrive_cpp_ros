@@ -1,3 +1,5 @@
+Updated to reflect a six wheel robot with firmware 0.5.4
+
 # odrive_cpp_ros
 A ros_control based c++ driver to control 4 hoverboard/hub motors using 2 odrive boards. It is intended for skid steer style robots such as the Clearpath Husky. The hardware interface was created following the ros_control tutorial [here](http://wiki.ros.org/ros_control/Tutorials/Create%20your%20own%20hardware%20interface). I updated the original repo to work with my set up. Updated the odometry position calculations and added a watchdog for safety (which doesn't work perfectly yet). Also added a Battery Voltage Publisher. This repo is still a work in progress.
 
