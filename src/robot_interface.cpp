@@ -12,9 +12,9 @@
 #include "ros/callback_queue.h"
 
 
-#define FRONT_ODRIVE_SERIAL "205837735231"
-#define MIDDLE_ODRIVE_SERIAL  "205937745231"
-#define BACK_ODRIVE_SERIAL  "206737765231"
+#define FRONT_ODRIVE_SERIAL "35563259515441"
+#define MIDDLE_ODRIVE_SERIAL  "35567554548273"
+#define BACK_ODRIVE_SERIAL  "35627684221489"
 #define ENCODER_CPR 90 //Count per revolution
 #define PI 3.14159265358979
 #define TWO_PI (2 * PI)
@@ -75,6 +75,7 @@ class Navvy : public hardware_interface::RobotHW {
             motor_driver->sendWatchdog();
             motor_driver->setErrors();
             motor_driver->setStates(); 
+            std::cout << "Connected to odrives!"<< std::endl;
             motors_enabled = true; //If connected to odrive, set motors_enable to true
             
         }
@@ -104,7 +105,7 @@ class Navvy : public hardware_interface::RobotHW {
             }
             
             pos[i] = (((motor_pos-first_motor_pos[i]) * direction_multipliers[i])) * 2 * 3.141592;
-            std::cout << "position: " << pos[i] << std::endl; // so this only goes positive and negative (no switching)
+            //std::cout << "position: " << pos[i] << std::endl; // so this only goes positive and negative (no switching)
             
             //Get position from encoders
             //motor_driver->getPosCPR(i, pos_cpr); //In counts per revolution
@@ -156,12 +157,13 @@ class Navvy : public hardware_interface::RobotHW {
             } else {
                 target_speeds[i] = cmd[i] / TWO_PI * direction_multipliers[i]; //Convert from rad/s to turns/s (Divide by 2pi to get rev), correct direction, save to target speeds
             }
-            std::cout << target_speeds[i] << " ";
+            //std::cout << target_speeds[i] << " ";
         }
-         std::cout << std::endl;
+         //std::cout << std::endl;
         
         //if motors connected
         if (motors_enabled) {
+            //std::cout << "motor enabled, receiving cmds" << std::cout;
             ///motor_driver->sendWatchdog();
             ///motor_driver->setMotorSpeeds(target_speeds);
         }

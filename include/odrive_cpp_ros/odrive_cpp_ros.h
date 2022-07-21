@@ -27,7 +27,7 @@ typedef std::vector<uint8_t> commBuffer;
 #define ODRIVE_SDK_NOT_INITIALIZED 4
 #define ODRIVE_SDK_COMM_SUCCESS 0
 
-#define ODRIVE_SDK_SERIAL_NUMBER_CMD 2
+#define ODRIVE_SDK_SERIAL_NUMBER_CMD 5
 
 #define ODRIVE_SDK_WRITING_ENDPOINT 3 // found with running expore_odrive -v
 #define ODRIVE_SDK_READING_ENDPOINT 131 // found with running expore_odrive -v

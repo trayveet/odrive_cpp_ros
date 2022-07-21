@@ -4,15 +4,15 @@
   <include file="$(find robot_description)/launch/description.launch" ></include>-->
 
   <!-- Load controller configuration -->
- <!--  <rosparam command="load" file="$(find odrive_cpp_ros)/config/control.yaml" /> -->
+  <rosparam command="load" file="$(find odrive_cpp_ros)/config/control.yaml" />
 
   <!-- Load hardware interface -->
- <!--  <node name="robot_odrive_interface" pkg="odrive_cpp_ros" type="robot_odrive_interface" output="screen"/> -->
+  <node name="robot_odrive_interface" pkg="odrive_cpp_ros" type="robot_odrive_interface" output="screen"/>
 
   <!-- Spawn controllers -->
-<!--   <node name="base_controller_spawner" pkg="controller_manager" type="spawner"
-        args="robot_joint_publisher robot_velocity_controller"/> -->
+  <node name="base_controller_spawner" pkg="controller_manager" type="spawner"
+        args="robot_joint_publisher robot_velocity_controller"/>
 
   <!-- Initialise robot state publisher -->
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" /> -->
 </launch>
