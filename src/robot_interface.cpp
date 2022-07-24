@@ -151,7 +151,7 @@ class Navvy : public hardware_interface::RobotHW {
         //For each wheel
         for (int i = 0; i < 6; ++i) {
             //If command too big or too small - ignore. Why 200?
-            if (cmd[i] < -16 || cmd[i] > 16) { //2.5 turns/s (or 15.7 rad/s) equate to 3mph for 17cm diameter wheel.
+            if (cmd[i] < -20 || cmd[i] > 20) { //2.5 turns/s (or 15.7 rad/s) equate to 3mph for 17cm diameter wheel.
                 std::cout << "Motor speed request: " << cmd[i] << " ignored." << std::endl;
                 target_speeds[i] = 0.0;
             } else {
@@ -163,9 +163,9 @@ class Navvy : public hardware_interface::RobotHW {
         
         //if motors connected
         if (motors_enabled) {
-            //std::cout << "motor enabled, receiving cmds" << std::cout;
-            ///motor_driver->sendWatchdog();
-            ///motor_driver->setMotorSpeeds(target_speeds);
+            //std::cout << "motor enabled, receiving cmds" << std::endl;
+            motor_driver->sendWatchdog();
+            motor_driver->setMotorSpeeds(target_speeds);
         }
     }
 
@@ -185,7 +185,7 @@ class Navvy : public hardware_interface::RobotHW {
         //bool last_cpr_populated = false; //Create last_cpr_populated variable and set to false initally
 	    bool first_pos_yet = true;
 	
-        int direction_multipliers[6] = {1, -1, -1, 1, 1, -1}; //Define direction to turn - used at top
+        int direction_multipliers[6] = {1, -1, 1, -1, 1, -1}; //Define direction to turn - used at top
         bool motors_enabled; //Create motors enabled variable which will be true when connected
 
 };
@@ -206,7 +206,7 @@ int main(int argc, char* argv[]) {
         const ros::Duration period = time - prev_time;
         prev_time = time;
 
-        robot.updateJointsFromHardware();
+        //robot.updateJointsFromHardware();
         cm.update(time, period); //Not 100% sure how the timing stuff works and what the best way to do it is.
         robot.writeCommandsToHardware();
         rate.sleep();
