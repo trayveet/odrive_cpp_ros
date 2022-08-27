@@ -1,4 +1,4 @@
-Updated to reflect a six wheel robot with firmware 0.5.4
+Updated to reflect a six wheel robot with firmware 0.5.1
 
 install
 sudo apt-get install ros-melodic-diff-drive-controller

@@ -4,6 +4,8 @@ robot_joint_publisher:
 
 robot_velocity_controller:
   type: "diff_drive_controller/DiffDriveController"
+  #left_wheel: ['front_left_wheel', 'rear_left_wheel']
+  #right_wheel: ['front_right_wheel', 'rear_right_wheel']
   left_wheel: ['front_left_wheel', 'middle_left_wheel', 'rear_left_wheel']
   right_wheel: ['front_right_wheel', 'middle_right_wheel', 'rear_right_wheel']
   publish_rate: 50
@@ -26,7 +28,7 @@ robot_velocity_controller:
   estimate_velocity_from_position: false
 
   # Wheel separation and radius multipliers
-  wheel_separation_multiplier: 1  # husky 1.875 - Will need to adjust based on odom readings
+  wheel_separation_multiplier: 1.5  # husky 1.875 - Will need to adjust based on odom readings
   wheel_radius_multiplier    : 1
 
   # Velocity and acceleration limits - To define
@@ -36,10 +38,10 @@ robot_velocity_controller:
       has_velocity_limits    : true
       max_velocity           : 2.0 # m/s
       has_acceleration_limits: true
-      max_acceleration       : 0.5 # 3.5   # m/s^2
+      max_acceleration       : 1.0 # 3.5   # m/s^2
   angular:
     z:
       has_velocity_limits    : true
-      max_velocity           : 1.0   # rad/s
+      max_velocity           : 2.0   # rad/s
       has_acceleration_limits: true
-      max_acceleration       : 0.5   # rad/s^2
+      max_acceleration       : 2.0   # rad/s^2
