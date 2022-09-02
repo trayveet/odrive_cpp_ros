@@ -200,6 +200,17 @@ int ODriveDriver::setStates() {
     return ODRIVE_SDK_COMM_SUCCESS;
 }
 
+int ODriveDriver::setIdleStates() {
+    for (uint8_t i = 0; i < num_motors_; ++i) {
+        int result = setState(i, 1); //run closed loop control
+        if (result != ODRIVE_SDK_COMM_SUCCESS) {
+            std::cout << "Setting state for motor #" << i << " failed. Result: " << result << std::endl;
+            return result;
+        }
+    }
+    return ODRIVE_SDK_COMM_SUCCESS;
+}
+
 int ODriveDriver::setError(int motor_index, uint16_t error_val) {
     if (! motor_to_odrive_handle_index_) {
         return ODRIVE_SDK_NOT_INITIALIZED;

@@ -4,10 +4,10 @@ robot_joint_publisher:
 
 robot_velocity_controller:
   type: "diff_drive_controller/DiffDriveController"
-  #left_wheel: ['front_left_wheel', 'rear_left_wheel']
-  #right_wheel: ['front_right_wheel', 'rear_right_wheel']
-  left_wheel: ['front_left_wheel', 'middle_left_wheel', 'rear_left_wheel']
-  right_wheel: ['front_right_wheel', 'middle_right_wheel', 'rear_right_wheel']
+  left_wheel: ['front_left_wheel', 'middle_left_wheel']
+  right_wheel: ['front_right_wheel', 'middle_right_wheel']
+  #left_wheel: ['front_left_wheel', 'middle_left_wheel', 'rear_left_wheel']
+  #right_wheel: ['front_right_wheel', 'middle_right_wheel', 'rear_right_wheel']
   publish_rate: 50
   pose_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.03]
   twist_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.03]
@@ -35,13 +35,22 @@ robot_velocity_controller:
   # Whenever a min_* is unspecified, default to -max_*
   linear:
     x:
-      has_velocity_limits    : true
+      has_velocity_limits    : false
       max_velocity           : 2.0 # m/s
       has_acceleration_limits: true
       max_acceleration       : 1.0 # 3.5   # m/s^2
   angular:
     z:
-      has_velocity_limits    : true
+      has_velocity_limits    : false
       max_velocity           : 2.0   # rad/s
       has_acceleration_limits: true
       max_acceleration       : 2.0   # rad/s^2
+
+robot_hardware_interface:
+
+  front_odrive_serial: "35563259515441"
+  left_odrive_serial:  "35567554548273"
+  right_odrive_serial:  "35627684221489"
+  number_of_wheels: 4
+  spin_rate: 20.0
+  

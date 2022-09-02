@@ -60,6 +60,7 @@ namespace odrive
         
         int setState(int motor_index, uint8_t state_val);
         int setStates(); // assumed to match num_motors
+        int setIdleStates(); // idle all motors
 
         int getMotorSpeed(int motor_index, float &motor_speed);
         int getBusVoltage(int motor_index, float &voltage);
